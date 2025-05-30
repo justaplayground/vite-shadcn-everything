@@ -2,8 +2,8 @@ import { Route, Routes } from 'react-router-dom'
 import { ContextProviders } from '@/contexts/ContextProviders'
 
 // inject pages
-import Home from '@/pages/Home'
-import Scanner from '@/pages/scanner'
+import Home from '@/pages/home'
+import Scanner from '@/pages/demo/scanner'
 
 export default function App() {
   return (
