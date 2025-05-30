@@ -1,6 +1,5 @@
 import CodeScanner from '@/components/shared/scanner/code-scanner'
 
-export default function Scanner() {
-  // playground
+export default function ScannerPage() {
   return <CodeScanner />
 }
