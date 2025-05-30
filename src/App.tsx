@@ -3,7 +3,7 @@ import { ContextProviders } from '@/contexts/ContextProviders'
 
 // inject pages
 import Home from '@/pages/home'
-import Maintenance from '@/pages/system/Maintanance'
+import Maintenance from '@/pages/system/maintanance'
 import Scanner from '@/pages/demo/scanner'
 
 export default function App() {
