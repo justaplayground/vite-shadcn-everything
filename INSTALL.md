@@ -111,3 +111,10 @@ npm install react-router-dom
 npm install vite-tsconfig-paths axios
 ```
 
+## 9. Dependencies for demonstrating
+
+```bash
+npm install html5-qrcode
+```
+* `html5-qrcode`: working with scanner
+* 
