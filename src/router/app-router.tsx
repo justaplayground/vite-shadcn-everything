@@ -1,4 +1,4 @@
-import { useRoutes, type DataRouteObject } from 'react-router-dom'
+import { useRoutes } from 'react-router-dom'
 import { ROUTES } from './routes'
 
 // function flattenPages(pages: DataRouteObject[]): any[] {
