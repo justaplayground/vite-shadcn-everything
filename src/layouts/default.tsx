@@ -1,9 +1,9 @@
+import { Menu } from 'lucide-react'
+import { Link, Outlet } from 'react-router-dom'
+import { demoPages } from '@/constants'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { demoPages } from '@/routes'
-import { Menu } from 'lucide-react'
-import { Link, Outlet } from 'react-router-dom'
 
 export default function DefaultLayout() {
   return (
@@ -25,9 +25,9 @@ export default function DefaultLayout() {
               </div>
               <Separator />
               <nav className="flex flex-col gap-2 overflow-auto">
-                {demoPages.map((page) => (
+                {demoPages.map((page, i) => (
                   <Link
-                    to={page.path}
+                    to={page.name + i}
                     key={page.path}
                     className="w-full px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors text-sm font-medium"
                   >

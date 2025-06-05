@@ -1,7 +1,7 @@
+import { demoPages } from '@/constants'
 import ezmove from '@/components/shared/animation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { demoPages } from '@/routes'
 
 export default function HomePage() {
   return (
@@ -58,9 +58,9 @@ export default function HomePage() {
               packages.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
-              {demoPages.map((page) => (
+              {demoPages.map((page, i) => (
                 <Button
-                  key={page.path}
+                  key={page.name + i}
                   className="w-full"
                   onClick={() => (window.location.href = page.path)}
                 >
