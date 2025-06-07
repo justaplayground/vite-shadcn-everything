@@ -111,7 +111,7 @@ export default function BuiltinCameraScanner({
         console.error('Failed to clear html5QrcodeScanner: ', error)
       })
     }
-  }, []) // Empty dependency array means this runs once on mount
+  }, [onScanError, onScanSuccess, onClose]) // Empty dependency array means this runs once on mount
 
   return (
     // Replaced Card with div for flexibility if shadcn/ui is not fully integrated

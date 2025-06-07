@@ -3,10 +3,11 @@ import BuiltinCameraScanner from './builtin-camera-scanner'
 import { Button } from '@/components/ui/button'
 
 interface CodeScannerProps {
+  key?: string
   // put some props here if needed
 }
 
-export default function CodeScanner({}: CodeScannerProps) {
+export default function CodeScanner({ key = 'code-scanner' }: CodeScannerProps) {
   const [scanResult, setScanResult] = useState<string | null>(null)
   const [scannerError, setScannerError] = useState<string | Error | null>(null)
   const [showCameraScanner, setShowCameraScanner] = useState<boolean>(false)
@@ -107,7 +108,7 @@ export default function CodeScanner({}: CodeScannerProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col p-4 font-sans">
+    <div key={key} className="min-h-screen bg-gray-100 flex flex-col p-4 font-sans">
       <main className="flex-1 flex flex-col items-center justify-center">
         <div className="bg-white p-6 md:p-8 rounded-xl shadow-2xl w-full max-w-lg">
           <h1 className="text-3xl font-bold text-center text-primary mb-8">QR Code Scanner</h1>
