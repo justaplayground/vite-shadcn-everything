@@ -2,8 +2,10 @@ import { demoPages } from '@/constants'
 import ezmove from '@/components/shared/animation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useNavigate } from 'react-router-dom'
 
 export default function HomePage() {
+  const navigate = useNavigate()
   return (
     <main className="bg-muted flex flex-col items-center justify-start px-4 py-8 gap-8 flex-1">
       <div className="w-full max-w-3xl">
@@ -62,7 +64,7 @@ export default function HomePage() {
                 <Button
                   key={page.name + i}
                   className="w-full"
-                  onClick={() => (window.location.href = page.path)}
+                  onClick={() => navigate(page.path)}
                 >
                   {page.name}
                 </Button>

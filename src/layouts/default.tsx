@@ -27,8 +27,8 @@ export default function DefaultLayout() {
               <nav className="flex flex-col gap-2 overflow-auto">
                 {demoPages.map((page, i) => (
                   <Link
-                    to={page.name + i}
-                    key={page.path}
+                    to={page.path}
+                    key={page.name + i}
                     className="w-full px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors text-sm font-medium"
                   >
                     {page.name}
