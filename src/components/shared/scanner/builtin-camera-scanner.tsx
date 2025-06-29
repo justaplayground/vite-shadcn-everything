@@ -8,9 +8,9 @@ import {
 } from 'html5-qrcode'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import './scanner.css'
+import './scanner.css' // Assuming you have this file for custom scanner styles
 
-interface MobileCodeScannerProps {
+interface BuiltinCameraScannerProps {
   onScanSuccess: (result: string) => void
   onScanError: (error: string | Error) => void
   onClose: () => void
@@ -46,20 +46,13 @@ export default function BuiltinCameraScanner({
   onScanSuccess,
   onScanError,
   onClose,
-}: MobileCodeScannerProps) {
-  const qrcodeRegionId = 'html5qr-code-full-region-mobile' // Unique ID for this instance
-  const [scannerReady, setScannerReady] = useState(false) // To indicate scanner initialization status
-
-  const destroyScanner = () => {
-    // return the
-    onClose()
-  }
+}: BuiltinCameraScannerProps) {
+  const qrcodeRegionId = 'html5qr-code-full-region-mobile'
 
   useEffect(() => {
     const qrCodeRegion = document.getElementById(qrcodeRegionId)
     if (!qrCodeRegion) {
-      console.error(`Camera scanner UI element (id: "${qrcodeRegionId}") not found.`)
-      onScanError(`Camera scanner UI element (id: "${qrcodeRegionId}") not found in the DOM.`)
+      onScanError(`Camera scanner UI element (id: "${qrcodeRegionId}") not found.`)
       onClose()
       return
     }
@@ -71,11 +64,7 @@ export default function BuiltinCameraScanner({
     )
 
     const successCallback: QrcodeSuccessCallback = (decodedText, decodedResult) => {
-      console.log(`Mobile Camera Scan result: ${decodedText}`, decodedResult)
-      setScannerReady(true) // Set ready on first successful scan
       onScanSuccess(decodedText)
-      // Optionally stop scanner after successful scan
-      html5QrcodeScanner.clear().catch((err) => console.error('Error clearing camera scanner', err))
     }
 
     const errorCallback: QrcodeErrorCallback = (errorMessage) => {
@@ -85,59 +74,44 @@ export default function BuiltinCameraScanner({
           errorMessage.toLowerCase().includes('notallowederror')
         ) {
           onScanError('Camera permission denied. Please allow camera access.')
-          onClose() // Automatically close if permission denied
-          setScannerReady(false) // Mark as not ready on permission error
+          onClose()
         } else if (
           !errorMessage.toLowerCase().includes('qr code parse error') &&
           !errorMessage.toLowerCase().includes('not found')
         ) {
-          // Log other types of errors, but don't necessarily set them in UI to avoid noise
-          console.warn(`Mobile Camera scan error: ${errorMessage}`)
+          console.warn(`Camera scan error: ${errorMessage}`)
         }
       }
     }
 
-    // Call render. Based on your provided TypeScript definition, it returns void.
-    // We cannot chain .then() directly after this call.
-    // We will rely on the `successCallback` to indicate readiness or `errorCallback` for failure.
-    try {
-      html5QrcodeScanner.render(successCallback, errorCallback)
-    } catch (err) {
-      console.error('Failed to start camera scanner during render call:', err)
-      onScanError(
-        'Failed to start camera scanner. ' + (err instanceof Error ? err.message : String(err))
-      )
-      onClose()
-      setScannerReady(false) // Explicitly set to false on immediate error
-    }
+    html5QrcodeScanner.render(successCallback, errorCallback)
 
     return () => {
-      // Ensure the scanner is cleared when the component unmounts
       html5QrcodeScanner.clear().catch((error) => {
         console.error('Failed to clear html5QrcodeScanner: ', error)
       })
     }
-  }, [onScanError, onScanSuccess, onClose]) // Empty dependency array means this runs once on mount
+  }, [onScanError, onScanSuccess, onClose])
 
   return (
-    // Replaced Card with div for flexibility if shadcn/ui is not fully integrated
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Scan Code with Camera</CardTitle>
-      </CardHeader>
-      <CardContent>
-        {!scannerReady && <p className="text-center text-gray-600 mb-4">Starting camera...</p>}
-        <div
-          id={qrcodeRegionId}
-          className="w-full border-2 border-dashed border-gray-300 rounded-lg overflow-hidden flex flex-col items-center" // Added aspect-video for better mobile sizing
-          style={{ minHeight: '200px' }} // Fallback min-height
-        >
-          {/* Camera feed injected here */}
-        </div>
-        <Button onClick={destroyScanner} variant="destructive" className="w-full mt-4">
-          Stop Scanner
-        </Button>
-      </CardContent>
-    </Card>
+    <div className="w-full h-screen flex flex-col items-center justify-center bg-black">
+      <Card className="w-[90%] max-w-md m-4">
+        <CardHeader>
+          <CardTitle>Scan Code with Camera</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div
+            id={qrcodeRegionId}
+            className="w-full border-2 border-dashed border-gray-300 rounded-lg overflow-hidden"
+            style={{ minHeight: '250px' }}
+          >
+            {/* Camera feed is injected here */}
+          </div>
+          <Button onClick={onClose} variant="destructive" className="w-full mt-4">
+            Cancel
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
