@@ -8,6 +8,7 @@ import {
 } from 'html5-qrcode'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import './scanner.css'
 
 interface MobileCodeScannerProps {
   onScanSuccess: (result: string) => void
@@ -16,7 +17,7 @@ interface MobileCodeScannerProps {
 }
 
 const cameraScannerConfig = {
-  fps: 10,
+  fps: 24,
   qrbox: { width: 250, height: 250 },
   rememberLastUsedCamera: true,
   supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
@@ -48,6 +49,11 @@ export default function BuiltinCameraScanner({
 }: MobileCodeScannerProps) {
   const qrcodeRegionId = 'html5qr-code-full-region-mobile' // Unique ID for this instance
   const [scannerReady, setScannerReady] = useState(false) // To indicate scanner initialization status
+
+  const destroyScanner = () => {
+    // return the
+    onClose()
+  }
 
   useEffect(() => {
     const qrCodeRegion = document.getElementById(qrcodeRegionId)
@@ -123,12 +129,12 @@ export default function BuiltinCameraScanner({
         {!scannerReady && <p className="text-center text-gray-600 mb-4">Starting camera...</p>}
         <div
           id={qrcodeRegionId}
-          className="w-full border-2 border-dashed border-gray-300 rounded-lg overflow-hidden aspect-video" // Added aspect-video for better mobile sizing
+          className="w-full border-2 border-dashed border-gray-300 rounded-lg overflow-hidden flex flex-col items-center" // Added aspect-video for better mobile sizing
           style={{ minHeight: '200px' }} // Fallback min-height
         >
           {/* Camera feed injected here */}
         </div>
-        <Button onClick={onClose} variant="destructive" className="w-full mt-4">
+        <Button onClick={destroyScanner} variant="destructive" className="w-full mt-4">
           Stop Scanner
         </Button>
       </CardContent>

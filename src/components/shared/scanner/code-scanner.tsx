@@ -112,35 +112,37 @@ export default function CodeScanner({ key = 'code-scanner' }: CodeScannerProps) 
       <main className="flex-1 flex flex-col items-center justify-center">
         <div className="bg-white p-6 md:p-8 rounded-xl shadow-2xl w-full max-w-lg">
           <h1 className="text-3xl font-bold text-center text-primary mb-8">QR Code Scanner</h1>
-          {/* Desktop Scanner Input Section */}
-          <div className="mb-6">
-            <label
-              htmlFor="desktop-scanner-input"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Scan with Desktop Scanner:
-            </label>
-            <input
-              type="text"
-              id="desktop-scanner-input"
-              ref={desktopInputRef}
-              value={desktopScannerInput}
-              onChange={handleDesktopInputChange}
-              onKeyDown={handleDesktopInputKeyDown}
-              placeholder="Click here & scan with your device"
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-            <p className="mt-1 text-xs text-gray-500">
-              Ensure this field is focused before scanning. Press Enter or scan (most scanners
-              auto-submit).
-            </p>
-          </div>
-          <div className="text-center my-4 text-gray-500 font-semibold">OR</div>
-          {/* Camera Scanner Section */}
           {!showCameraScanner && (
-            <Button onClick={handleStartCameraScanner} className="w-full mb-4">
-              Start Camera Scanner (Mobile/Webcam)
-            </Button>
+            <>
+              {/* Desktop Scanner Input Section */}
+              <div className="mb-6">
+                <label
+                  htmlFor="desktop-scanner-input"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Scan with Desktop Scanner:
+                </label>
+                <input
+                  type="text"
+                  id="desktop-scanner-input"
+                  ref={desktopInputRef}
+                  value={desktopScannerInput}
+                  onChange={handleDesktopInputChange}
+                  onKeyDown={handleDesktopInputKeyDown}
+                  placeholder="Click here & scan with your device"
+                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+                <p className="mt-1 text-xs text-gray-500">
+                  Ensure this field is focused before scanning. Press Enter or scan (most scanners
+                  auto-submit).
+                </p>
+              </div>
+              <div className="text-center my-4 text-gray-500 font-semibold">OR</div>
+              {/* Camera Scanner Section */}
+              <Button onClick={handleStartCameraScanner} className="w-full mb-4">
+                Start Camera Scanner (Mobile/Webcam)
+              </Button>
+            </>
           )}
           {showCameraScanner && (
             // Render the Builtin Camera Scanner component
