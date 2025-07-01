@@ -1,0 +1,5 @@
+# This file is for public deployment purpose
+
+# Deny all iframe injection
+/*
+  X-Frame-Options: DENY
