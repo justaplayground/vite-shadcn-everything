@@ -15,6 +15,10 @@ export default defineConfig({
     //   '/api': 'http://localhost:5000',
     // },
   },
+  define: {
+    // Make environment variables available to the client
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  everything-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: everything-frontend
+    ports:
+      - "8080:80"
+    environment:
+      - VITE_APP_VERSION=${VERSION:-0.2.1}
+      - VITE_BASE_PATH=/everything
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - frontend-network
+
+networks:
+  frontend-network:
+    driver: bridge
+    name: frontend-network 
